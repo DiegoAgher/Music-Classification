@@ -20,6 +20,8 @@ classifier.model.fit(train_sequences, y_train_binary_sequences,
 loss, accuracy = classifier.model.evaluate(test_sequences,
                                            y_test_binary_sequences)
 
+print("Loss: {0} ; Acc: {1} on test dataset".format([loss, accuracy]))
+
 classifier.model.save('my_classifier.h5')
 
 
