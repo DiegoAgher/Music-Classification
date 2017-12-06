@@ -1,0 +1,8 @@
+*.DS_Store
+*.ipynb_checkpoints/
+*.idea/
+*.pyc
+*.ipynb
+*.pkl
+*.csv
+*.h5
