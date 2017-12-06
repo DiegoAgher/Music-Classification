@@ -47,7 +47,6 @@ class DielmannArq(object):
 
         global_mean = GlobalAveragePooling1D()(pool_3)
         global_max = GlobalMaxPooling1D()(pool_3)
-        global_l2 = Lambda(l2_norm)(pool_3)
 
         concat = merge([global_mean, global_max], mode='concat',
                        concat_axis=-1)
