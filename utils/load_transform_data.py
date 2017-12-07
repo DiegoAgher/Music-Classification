@@ -106,12 +106,15 @@ def get_target_variable_for_windows_categorical(target_variable,
     return to_categorical(target_variable_for_windows)
 
 
-def from_segments_to_song(predicted_probabilities, nb_windows=10):
-    final_preds_probs = []
-    samples_number = predicted_probabilities.shape[0]
+def average_window_array(array, nb_windows=10):
+    averages = []
+    samples_number = array.shape[0]
     for index in range(0, samples_number):
-        final_preds_probs.append(predicted_probabilities[index * nb_windows:
+        averages.append(array[index * nb_windows:
                                  (index + 1) * nb_windows].mean(axis=0))
 
-    return np.array(final_preds_probs)
+    return np.array(averages)
 
+
+def to_categorical_inverse(array):
+    return np.argmax(array, axis=1)
