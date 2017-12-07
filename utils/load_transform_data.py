@@ -104,3 +104,14 @@ def get_target_variable_for_windows_categorical(target_variable,
         target_variable_for_windows += ([value] * nb_windows)
 
     return to_categorical(target_variable_for_windows)
+
+
+def from_segments_to_song(predicted_probabilities, nb_windows=10):
+    final_preds_probs = []
+    samples_number = predicted_probabilities.shape[0]
+    for index in range(0, samples_number):
+        final_preds_probs.append(predicted_probabilities[index * nb_windows:
+                                 (index + 1) * nb_windows].mean(axis=0))
+
+    return np.array(final_preds_probs)
+
