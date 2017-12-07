@@ -23,7 +23,7 @@ loss, accuracy = classifier.model.evaluate(test_sequences,
 
 
 
-print("Loss: {0} ; Acc: {1} on test dataset".format([loss, accuracy]))
+print("Loss: {} ; Acc: {} on test dataset".format(loss, accuracy))
 
 classifier.model.save('my_classifier.h5')
 
