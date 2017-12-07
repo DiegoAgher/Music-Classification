@@ -1,3 +1,4 @@
+from utils.load_transform_data impor from_segments_to_song
 from models.Dielmann import DielmannArq
 from build_spectrograms import build_spectrograms
 
@@ -14,11 +15,13 @@ classifier = DielmannArq(frames=377, nb_filters_1=128, nb_filters_2=128*2,
 classifier.build_convolutional_model()
 classifier.model.fit(train_sequences, y_train_binary_sequences,
                      batch_size=32,
-                     nb_epoch=10,
+                     nb_epoch=1,
                      validation_data=(val_sequences, y_val_binary_sequences))
 
 loss, accuracy = classifier.model.evaluate(test_sequences,
                                            y_test_binary_sequences)
+
+
 
 print("Loss: {0} ; Acc: {1} on test dataset".format([loss, accuracy]))
 
