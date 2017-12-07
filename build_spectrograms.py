@@ -6,7 +6,7 @@ from load_small_dataset import tracks, train_valid_tracks, x_train_ids,\
     validation_valid_tracks, x_val_ids, test_valid_tracks, x_test_ids
 
 
-def build_spectrograms(hop_length=350, length_threshold=27):
+def build_spectrograms(nb_windows=10, hop_length=350, length_threshold=27):
 
     spectrograms, shorter_files =\
         dismiss_shorter_tracks(train_valid_tracks, hop_length,
@@ -34,7 +34,8 @@ def build_spectrograms(hop_length=350, length_threshold=27):
                                        filtered_val_ids, filtered_test_ids)
 
     small_data_set_spectograms = {}
-    train_sequences = create_windows_from_spectrogram(spectrograms)
+    train_sequences = create_windows_from_spectrogram(spectrograms,
+                                                      nb_windows=nb_windows)
     y_train_binary_sequences =\
         get_target_variable_for_windows_categorical(y_train)
 
@@ -44,6 +45,7 @@ def build_spectrograms(hop_length=350, length_threshold=27):
     window_size = train_sequences.shape[1]
 
     val_sequences = create_windows_from_spectrogram(spectrograms_val,
+                                                    nb_windows=nb_windows,
                                                     window_size=window_size)
     y_val_binary_sequences = get_target_variable_for_windows_categorical(y_val)
 
@@ -51,6 +53,7 @@ def build_spectrograms(hop_length=350, length_threshold=27):
                                          y_val_binary_sequences)
 
     test_sequences = create_windows_from_spectrogram(spectrograms_test,
+                                                     nb_windows=nb_windows,
                                                      window_size=window_size)
     y_test_binary_sequences =\
         get_target_variable_for_windows_categorical(y_test)
