@@ -45,21 +45,24 @@ def build_spectrograms(nb_windows=10, hop_length=350, length_threshold=27):
     window_size = train_sequences.shape[1]
 
     val_sequences = create_windows_from_spectrogram(spectrograms_val,
-                                                    nb_windows=nb_windows,
-                                                    window_size=window_size)
+                                                    window_size=window_size,
+                                                    nb_windows=nb_windows)
     y_val_binary_sequences = get_target_variable_for_windows_categorical(y_val)
 
     small_data_set_spectograms['val'] = (val_sequences,
                                          y_val_binary_sequences)
 
     test_sequences = create_windows_from_spectrogram(spectrograms_test,
-                                                     nb_windows=nb_windows,
-                                                     window_size=window_size)
+                                                     window_size=window_size,
+                                                     nb_windows=nb_windows)
     y_test_binary_sequences =\
         get_target_variable_for_windows_categorical(y_test)
 
     small_data_set_spectograms['test'] = (test_sequences,
                                           y_test_binary_sequences)
+
+    assert train_sequences.shape[1] == val_sequences.shape[1] ==\
+        test_sequences.shape[1]
 
     return small_data_set_spectograms
 

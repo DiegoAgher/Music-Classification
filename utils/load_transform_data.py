@@ -108,10 +108,10 @@ def get_target_variable_for_windows_categorical(target_variable,
 
 def average_window_array(array, nb_windows=10):
     averages = []
-    samples_number = array.shape[0]
+    samples_number = int(array.shape[0] / nb_windows)
     for index in range(0, samples_number):
         averages.append(array[index * nb_windows:
-                                 (index + 1) * nb_windows].mean(axis=0))
+                              (index + 1) * nb_windows].mean(axis=0))
 
     return np.array(averages)
 
