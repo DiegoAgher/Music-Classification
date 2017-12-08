@@ -1,14 +1,28 @@
+import sys
 import numpy as np
 from utils.load_transform_data import average_window_array,\
     to_categorical_inverse, enc
 from models.Dielmann import DielmannArq
 from build_spectrograms import build_spectrograms
 
-
+hop_length = 350
 windows_number = 10
-songs_size = 30
 
-small_dataset_spectrograms = build_spectrograms(windows_number, 350)
+if len(sys.argv) == 2:
+    hop_length = int(sys.argv[1])
+elif len(sys.argv) == 3:
+    windows_number = int(sys.argv[2])
+    if windows_number > 10:
+        windows_number = 10
+        print("Tracks are 30 seconds long, "
+              "can't create more than 10 windows per track, using"
+              " windows_number=10")
+
+
+print("Using hop_length {} for spectrogram calculation; "
+      "Number of windows per track {}".format(hop_length, windows_number))
+
+small_dataset_spectrograms = build_spectrograms(windows_number, hop_length)
 
 train_sequences, y_train_binary_sequences = small_dataset_spectrograms['train']
 val_sequences, y_val_binary_sequences = small_dataset_spectrograms['val']
@@ -49,6 +63,4 @@ accuracy = sum(predictions == y_test) / len(y_test)
 print("Accuracy for full songs is {}".format(accuracy))
 
 classifier.model.save('my_classifier.h5')
-
-
 
