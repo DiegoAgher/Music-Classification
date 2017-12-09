@@ -1,3 +1,5 @@
+import os
+import pickle
 from utils.load_transform_data import dismiss_shorter_tracks,\
     filter_short_files_and_ids, get_target_variable_for_windows_categorical
 from utils.load_transform_data import get_target_variables_per_group,\
@@ -7,6 +9,14 @@ from load_small_dataset import tracks, train_valid_tracks, x_train_ids,\
 
 
 def build_spectrograms(nb_windows=10, hop_length=350, length_threshold=27):
+
+    pickled_spectrograms = [f for f in os.listdir('./spectrograms')
+                            if os.path.isfile(f) and '.pkl' in f]
+
+    pickle_name = "spectrograms/{}_{}.pkl".format(hop_length, nb_windows)
+    if pickle_name in pickled_spectrograms:
+        with open(pickle_name, 'rb') as file:
+            return pickle.load(file)
 
     spectrograms, shorter_files =\
         dismiss_shorter_tracks(train_valid_tracks, hop_length,
@@ -63,6 +73,9 @@ def build_spectrograms(nb_windows=10, hop_length=350, length_threshold=27):
 
     assert train_sequences.shape[1] == val_sequences.shape[1] ==\
         test_sequences.shape[1]
+
+    with open(pickle_name, 'wb') as file:
+        pickle.dump(small_data_set_spectograms, file)
 
     return small_data_set_spectograms
 
