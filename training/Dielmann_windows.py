@@ -5,22 +5,36 @@ from utils.load_transform_data import average_window_array,\
 from models.Dielmann import DielmannArq
 from build_spectrograms import build_spectrograms
 
-hop_length = 350
-windows_number = 10
 
-if len(sys.argv) == 2:
-    hop_length = int(sys.argv[1])
-elif len(sys.argv) == 3:
-    windows_number = int(sys.argv[2])
+def assign_params(parameters):
+    hop_length = 350
+    windows_number = 10
+    model_name = 'my_classifier.h5'
+    number_params = len(parameters)
+
+    if number_params >= 2:
+         hop_length = int(sys.argv[1])
+    elif number_params >= 3:
+        windows_number = int(sys.argv[2])
+
+    elif number_params == 4:
+        model_name = str(sys.argv[3])
+
     if windows_number > 10:
         windows_number = 10
         print("Tracks are 30 seconds long, "
               "can't create more than 10 windows per track, using"
               " windows_number=10")
 
+    return hop_length, windows_number, model_name
+
+training_params = sys.argv
+hop_length, windows_number, model_name = assign_params(training_params)
+
 
 print("Using hop_length {} for spectrogram calculation; "
-      "Number of windows per track {}".format(hop_length, windows_number))
+      "Number of windows per track {};"
+      "Model name {}".format(hop_length, windows_number, model_name))
 
 small_dataset_spectrograms = build_spectrograms(windows_number, hop_length)
 
@@ -38,7 +52,7 @@ classifier = DielmannArq(frames=frame_size, nb_filters_1=128,
 classifier.build_convolutional_model()
 classifier.model.fit(train_sequences, y_train_binary_sequences,
                      batch_size=32,
-                     nb_epoch=1,
+                     nb_epoch=10,
                      validation_data=(val_sequences, y_val_binary_sequences))
 
 loss, accuracy = classifier.model.evaluate(test_sequences,
@@ -62,5 +76,5 @@ accuracy = sum(predictions == y_test) / len(y_test)
 
 print("Accuracy for full songs is {}".format(accuracy))
 
-classifier.model.save('my_classifier.h5')
+classifier.model.save(model_name)
 
