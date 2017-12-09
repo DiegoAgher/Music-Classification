@@ -10,12 +10,13 @@ from load_small_dataset import tracks, train_valid_tracks, x_train_ids,\
 
 def build_spectrograms(nb_windows=10, hop_length=350, length_threshold=27):
 
-    pickled_spectrograms = [f for f in os.listdir('./spectrograms')
-                            if os.path.isfile(f) and '.pkl' in f]
-
-    pickle_name = "spectrograms/{}_{}.pkl".format(hop_length, nb_windows)
+    pickled_spectrograms = [f for f in os.listdir('spectrograms')]
+    pickle_name = "{}_{}.pkl".format(hop_length, nb_windows)
     if pickle_name in pickled_spectrograms:
-        with open(pickle_name, 'rb') as file:
+        print("\n Found spectrograms for hop_length {} and windows {}"
+
+              .format(hop_length, nb_windows))
+        with open("spectrograms/{}".format(pickle_name), 'rb') as file:
             return pickle.load(file)
 
     spectrograms, shorter_files =\
@@ -74,7 +75,7 @@ def build_spectrograms(nb_windows=10, hop_length=350, length_threshold=27):
     assert train_sequences.shape[1] == val_sequences.shape[1] ==\
         test_sequences.shape[1]
 
-    with open(pickle_name, 'wb') as file:
+    with open("spectrograms/{}".format(pickle_name), 'wb') as file:
         pickle.dump(small_data_set_spectograms, file)
 
     return small_data_set_spectograms
