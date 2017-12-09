@@ -11,13 +11,13 @@ def assign_params(parameters):
     windows_number = 10
     model_name = 'my_classifier.h5'
     number_params = len(parameters)
-
     if number_params >= 2:
          hop_length = int(sys.argv[1])
-    elif number_params >= 3:
+    if number_params >= 3:
         windows_number = int(sys.argv[2])
 
-    elif number_params == 4:
+    if number_params >= 4:
+        print("went in, {} is the param".format(sys.argv[3]))
         model_name = str(sys.argv[3])
 
     if windows_number > 10:
@@ -32,7 +32,7 @@ training_params = sys.argv
 hop_length, windows_number, model_name = assign_params(training_params)
 
 
-print("Using hop_length {} for spectrogram calculation; "
+print("\n Using hop_length {} for spectrogram calculation; "
       "Number of windows per track {};"
       "Model name {}".format(hop_length, windows_number, model_name))
 
