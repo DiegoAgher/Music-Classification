@@ -1,5 +1,6 @@
 import sys
 import numpy as np
+from keras.callbacks import ModelCheckpoint
 from utils.load_transform_data import average_window_array,\
     to_categorical_inverse, enc
 from models.Dielmann import DielmannArq
@@ -56,8 +57,12 @@ classifier = DielmannArq(frames=frame_size, nb_filters_1=128,
                          dropout_prob_1=0.2, nb_classes=4)
 
 classifier.build_convolutional_model()
+checkpoint = ModelCheckpoint('models/{}'.format(model_name),
+                             monitor='val_acc', verbose=1,
+                             save_best_only=True, mode='max')
+
 classifier.model.fit(train_sequences, y_train_binary_sequences,
-                     batch_size=32,
+                     batch_size=32, callbacks=[checkpoint],
                      nb_epoch=number_epochs,
                      validation_data=(val_sequences, y_val_binary_sequences))
 
