@@ -26,7 +26,7 @@ def build_spectrograms(nb_windows=10, hop_length=350, length_threshold=27):
         small_data_set_spectograms['val'] = (datafile['x_val'][:],
                                              datafile['y_val'][:])
 
-        small_data_set_spectograms['test'] = (datafile['test'][:],
+        small_data_set_spectograms['test'] = (datafile['x_test'][:],
                                               datafile['y_test'][:])
 
         return small_data_set_spectograms
