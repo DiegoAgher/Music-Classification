@@ -1,5 +1,4 @@
 import os
-import pickle
 import h5py
 from utils.load_transform_data import dismiss_shorter_tracks,\
     filter_short_files_and_ids, get_target_variable_for_windows_categorical
