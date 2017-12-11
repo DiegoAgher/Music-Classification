@@ -1,8 +1,6 @@
 import sys
-import numpy as np
 from keras.callbacks import ModelCheckpoint
-from utils.load_transform_data import average_window_array,\
-    to_categorical_inverse, enc
+from utils.evaluation import get_full_song_predictions
 from models.Dielmann import DielmannArq
 from build_spectrograms import build_spectrograms
 
@@ -52,8 +50,8 @@ test_sequences, y_test_binary_sequences = small_dataset_spectrograms['test']
 frame_size = train_sequences.shape[1]
 
 
-classifier = DielmannArq(frames=frame_size, nb_filters_1=128,
-                         nb_filters_2=128*2, dense_size=1024,
+classifier = DielmannArq(frames=frame_size, nb_filters_1=64,
+                         nb_filters_2=128, dense_size=1024,
                          dropout_prob_1=0.2, nb_classes=4)
 
 classifier.build_convolutional_model()
@@ -74,18 +72,7 @@ print("\nLoss: {} ; Acc: {} on windowed test dataset ".format(loss, accuracy))
 
 window_probabilities = classifier.model.predict(test_sequences)
 
-averaged_probabilities = average_window_array(window_probabilities)
-predictions = np.argmax(averaged_probabilities, axis=1)
-
-y_test = to_categorical_inverse(y_test_binary_sequences)
-number_songs = int(y_test.shape[0] / windows_number)
-
-indices = [windows_number * x for x in range(number_songs)]
-y_test = y_test[indices]
-
-accuracy = sum(predictions == y_test) / len(y_test)
-
-print("\nAccuracy for full songs is {}".format(accuracy))
+get_full_song_predictions(window_probabilities, y_test_binary_sequences)
 
 classifier.model.save(model_name)
 
