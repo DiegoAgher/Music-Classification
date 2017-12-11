@@ -53,11 +53,11 @@ frame_size = train_sequences.shape[1]
 
 
 classifier = DielmannArq(frames=frame_size, nb_filters_1=128,
-                         nb_filters_2=128*2, dense_size=2048,
+                         nb_filters_2=128*2, dense_size=1024,
                          dropout_prob_1=0.2, nb_classes=4)
 
 classifier.build_convolutional_model()
-checkpoint = ModelCheckpoint('models/{}'.format(model_name),
+checkpoint = ModelCheckpoint('saved_models/{}'.format(model_name),
                              monitor='val_acc', verbose=1,
                              save_best_only=True, mode='max')
 
