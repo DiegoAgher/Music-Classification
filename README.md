@@ -6,7 +6,7 @@ Build music classification Neural Network models using spectrograms as input dat
 In order to get the dataset used and some utilery, you'll have to clone the fma github [repo](https://github.com/mdeff/fma)  inside this project's directory. Download the dataset on the data section of the repo and place it inside the `fma` directory.
 
 ## Installing Dependencies 
-Create a fresh virtual environment, conda preferably, and run from terminal `pip install -r requirements.txt`. 
+Create a fresh virtual environment, conda preferably, for Python 3.6 and run from terminal `pip install -r requirements.txt`. 
 
 # Training a model
 The model implemented is based on Sander Dielemann's [architecture](http://benanne.github.io/2014/08/05/spotify-cnns.html) and is implemented on `models.Dielemann.py`.
