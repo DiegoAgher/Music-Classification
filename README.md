@@ -15,5 +15,7 @@ To train it, from your terminal, at the root level of this repo, run
 `python -m training.Dielmann_windows hop_length_param number_of_windows_param model_name_param number_of_epochs_param`, for example, `python -m training.Dielmann_windows 355 10 "hop_length_355.h5" 5`
 
 # Evaluation and Visualization
+
 For a comprehensive evaluation of the model, use the Jupyter Notebook `Evaluation and confusion matrix.ipynb` to see the performance of the model on each subset of the dataset.
+
 For feature visualization of the model, use the Jupyter Notebook `Feature visualization.ipynb`
