@@ -12,7 +12,9 @@ Create a fresh virtual environment, conda preferably, and run from terminal `pip
 The model implemented is based on Sander Dielemann's [architecture](http://benanne.github.io/2014/08/05/spotify-cnns.html) and is implemented on `models.Dielemann.py`.
 To train it, from your terminal, at the root level of this repo, run 
 
-`python -m training.Dielmann_windows hop_length_param number_of_windows_param model_name_param number_of_epochs_param`, for example, `python -m training.Dielemann_windows 355 10 "hop_length_355.h5" 5`
+`python -m training.Dielmann_windows hop_length_param number_of_windows_param model_name_param number_of_epochs_param`.
+
+For example, `python -m training.Dielemann_windows 355 10 "hop_length_355.h5" 5` corresponds to build spectrograms with a hop length of 355, building 10 windows, model saved will be 'hop_length_355.h5' and will be trained for 5 epochs.
 
 # Evaluation and Visualization
 
